@@ -409,8 +409,8 @@ h2 {
   box-shadow: 0 10px 20px var(--shadow-color);
 }
 #skill-img{
-  width:100px;
-  height:100px;
+  width:60px;
+  height:60px;
 }
 .skill-box {
   margin: 20px 0;
