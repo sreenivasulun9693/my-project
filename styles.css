@@ -410,6 +410,8 @@ h2 {
 }
 
 .skill-box {
+  width:20px;
+  height:20px;
   margin: 20px 0;
   display: flex;
   align-items: center;
