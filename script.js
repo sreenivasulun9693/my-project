@@ -1,3 +1,4 @@
+
 // Theme Toggle
 function initTheme() {
   const theme = localStorage.getItem('theme') || 'dark';
@@ -12,6 +13,12 @@ function toggleTheme() {
   document.documentElement.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
   updateThemeIcon(newTheme);
+  
+  // Add transition class to body for smooth theme change
+  document.body.classList.add('theme-transition');
+  setTimeout(() => {
+    document.body.classList.remove('theme-transition');
+  }, 1000);
 }
 
 function updateThemeIcon(theme) {
@@ -35,6 +42,57 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initialize theme
   initTheme();
+  
+  // Add back to top button
+  const backToTopButton = document.createElement('div');
+  backToTopButton.className = 'back-to-top';
+  backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
+  document.body.appendChild(backToTopButton);
+  
+  // Show/hide back to top button based on scroll position
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset > 300) {
+      backToTopButton.classList.add('show');
+    } else {
+      backToTopButton.classList.remove('show');
+    }
+  });
+  
+  // Scroll to top when button is clicked
+  backToTopButton.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+  
+  // Add animation classes to elements when they come into view
+  const animateOnScroll = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (entry.target.classList.contains('text-section')) {
+          entry.target.style.animation = entry.target.closest('.container2') ? 
+            'fadeInLeft 1s ease-out forwards' : 'fadeInRight 1s ease-out forwards';
+        } else if (entry.target.id === 'profile-img') {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0) scale(1)';
+        } else {
+          entry.target.classList.add('fade-in');
+        }
+        animateOnScroll.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  // Elements to animate
+  document.querySelectorAll('.text-section, #profile-img, .section, .project-card, .video-container, .forem').forEach(el => {
+    if (el.id === 'profile-img') {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px) scale(0.9)';
+      el.style.transition = 'all 0.8s ease';
+    }
+    animateOnScroll.observe(el);
+  });
 });
 
 // Menu Toggle
@@ -130,14 +188,17 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Project Filtering
+// Project Filtering with Animation
 document.addEventListener('DOMContentLoaded', function() {
   const filterButtons = document.querySelectorAll('.filter-btn');
   const projectCards = document.querySelectorAll('.project-card');
   
-  // Initialize all projects to be visible
-  projectCards.forEach(card => {
-    card.style.display = 'block';
+  // Initialize all projects to be visible with staggered animation
+  projectCards.forEach((card, index) => {
+    setTimeout(() => {
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, index * 100);
   });
   
   // Add click event to filter buttons
@@ -152,14 +213,17 @@ document.addEventListener('DOMContentLoaded', function() {
       // Get filter value
       const filterValue = button.getAttribute('data-filter');
       
-      // Filter projects
+      // Filter projects with staggered animation
+      let visibleIndex = 0;
+      
       projectCards.forEach(card => {
         if (filterValue === 'all') {
           card.style.display = 'block';
           setTimeout(() => {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0)';
-          }, 100);
+          }, visibleIndex * 100);
+          visibleIndex++;
         } else {
           const categories = card.getAttribute('data-category').split(' ');
           if (categories.includes(filterValue)) {
@@ -167,7 +231,8 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
               card.style.opacity = '1';
               card.style.transform = 'translateY(0)';
-            }, 100);
+            }, visibleIndex * 100);
+            visibleIndex++;
           } else {
             card.style.opacity = '0';
             card.style.transform = 'translateY(20px)';
@@ -180,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Project Modal
+  // Project Modal with Enhanced Animation
   const modal = document.querySelector('.project-modal');
   const modalBody = document.querySelector('.modal-body');
   const closeModal = document.querySelector('.close-modal');
@@ -219,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
       techStack: ["Java", "Object-Oriented Programming", "File Handling"],
       challenges: "Ensuring secure user authentication and maintaining transaction integrity while providing a user-friendly interface.",
       solution: "Implemented a layered architecture with separate components for authentication, transaction processing, and user interface to maintain code organization and security.",
-      image: "d:\\html and css\\myPortfolio\\images\\java20.jpg",
+      image: "images/java20.jpg",
       github: "https://github.com/sreenivasulu2429/NewCoding/tree/main/AtmInterface"
     },
     numguess: {
@@ -235,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
       techStack: ["Java", "Random Number Generation", "User Input Handling"],
       challenges: "Creating an engaging user experience with appropriate difficulty scaling and meaningful feedback.",
       solution: "Designed an adaptive difficulty system that adjusts based on player performance and provides helpful hints without making the game too easy.",
-      image: "d:\\html and css\\myPortfolio\\images\\java17-fotor-20240905213635.jpg",
+      image: "images/java17-fotor-20240905213635.jpg",
       github: "https://github.com/sreenivasulu2429/NewCoding/tree/main/Number_guessing"
     },
     voting: {
@@ -251,12 +316,12 @@ document.addEventListener('DOMContentLoaded', function() {
       techStack: ["Java", "Collections Framework", "File I/O"],
       challenges: "Ensuring vote integrity and preventing duplicate voting while maintaining voter anonymity.",
       solution: "Implemented a token-based voting system with cryptographic verification to ensure each voter can only vote once while keeping individual votes private.",
-      image: "d:\\html and css\\myPortfolio\\images\\java 19.png",
+      image: "images/java 19.png",
       github: "https://github.com/sreenivasulu2429/NewCoding/tree/main/Voting"
     }
   };
   
-  // Open modal with project details
+  // Open modal with project details and enhanced animation
   detailButtons.forEach(button => {
     button.addEventListener('click', () => {
       const projectId = button.getAttribute('data-project');
@@ -293,21 +358,44 @@ document.addEventListener('DOMContentLoaded', function() {
         
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
+        
+        // Animate modal elements
+        setTimeout(() => {
+          const elements = modalBody.querySelectorAll('h2, img, p, h3, ul, .tech-stack, .project-links');
+          elements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.5s ease';
+            
+            setTimeout(() => {
+              el.style.opacity = '1';
+              el.style.transform = 'translateY(0)';
+            }, 100 + (index * 100));
+          });
+        }, 300);
       }
     });
   });
   
-  // Close modal
+  // Close modal with animation
   closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
+    modal.style.opacity = '0';
+    setTimeout(() => {
+      modal.style.display = 'none';
+      modal.style.opacity = '1';
+      document.body.style.overflow = 'auto';
+    }, 300);
   });
   
   // Close modal when clicking outside
   window.addEventListener('click', (e) => {
     if (e.target === modal) {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto';
+      modal.style.opacity = '0';
+      setTimeout(() => {
+        modal.style.display = 'none';
+        modal.style.opacity = '1';
+        document.body.style.overflow = 'auto';
+      }, 300);
     }
   });
 });
@@ -317,10 +405,24 @@ document.addEventListener('DOMContentLoaded', function() {
   emailjs.init('ktWkzd0cydmrFuE4r'); // Replace with your actual public key
 })();
 
-// Contact Form Handling
+// Contact Form Handling with Enhanced Animation
 document.addEventListener('DOMContentLoaded', function() {
   const contactForm = document.getElementById('contact-form');
   if (contactForm) {
+    // Add focus animation to form inputs
+    const formInputs = contactForm.querySelectorAll('input, textarea');
+    formInputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+      });
+      
+      input.addEventListener('blur', function() {
+        if (this.value === '') {
+          this.parentElement.classList.remove('focused');
+        }
+      });
+    });
+    
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -358,11 +460,22 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Toast notification function
+// Enhanced Toast notification function
 function showToast(message, type) {
+  // Remove any existing toasts
+  const existingToasts = document.querySelectorAll('.toast');
+  existingToasts.forEach(toast => toast.remove());
+  
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.textContent = message;
+  
+  // Add icon based on type
+  const icon = type === 'success' ? 'check-circle' : 'exclamation-circle';
+  toast.innerHTML = `
+    <i class="fas fa-${icon}"></i>
+    <span>${message}</span>
+  `;
+  
   document.body.appendChild(toast);
 
   setTimeout(() => toast.classList.add('show'), 100);
@@ -372,7 +485,7 @@ function showToast(message, type) {
   }, 3000);
 }
 
-// Footer animation
+// Footer animation with enhanced effects
 document.addEventListener('DOMContentLoaded', function() {
   const footerSections = document.querySelectorAll('.footer-section');
   
@@ -383,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function() {
           setTimeout(() => {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
-          }, index * 100);
+          }, index * 150);
           footerObserver.unobserve(entry.target);
         }
       });
@@ -393,13 +506,40 @@ document.addEventListener('DOMContentLoaded', function() {
   
   footerSections.forEach((section) => {
     section.style.opacity = '0';
-    section.style.transform = 'translateY(20px)';
-    section.style.transition = 'all 0.5s ease';
+    section.style.transform = 'translateY(30px)';
+    section.style.transition = 'all 0.7s ease';
     footerObserver.observe(section);
   });
+  
+  // Animate footer icons
+  const footerIcons = document.querySelectorAll('.footer-icons a');
+  const footerIconsObserver = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        footerIcons.forEach((icon, index) => {
+          setTimeout(() => {
+            icon.style.opacity = '1';
+            icon.style.transform = 'translateY(0)';
+          }, index * 150);
+        });
+        footerIconsObserver.unobserve(entries[0].target);
+      }
+    },
+    { threshold: 0.5 }
+  );
+  
+  if (footerIcons.length > 0) {
+    footerIcons.forEach(icon => {
+      icon.style.opacity = '0';
+      icon.style.transform = 'translateY(20px)';
+      icon.style.transition = 'all 0.5s ease';
+    });
+    
+    footerIconsObserver.observe(document.querySelector('.footer-icons'));
+  }
 });
 
-// Smooth scrolling for anchor links
+// Enhanced Smooth scrolling for anchor links
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -409,6 +549,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const targetElement = document.querySelector(targetId);
       
       if (targetElement) {
+        // Highlight the section being scrolled to
+        targetElement.classList.add('highlight-section');
+        setTimeout(() => {
+          targetElement.classList.remove('highlight-section');
+        }, 2000);
+        
         window.scrollTo({
           top: targetElement.offsetTop - 80, // Offset for header
           behavior: 'smooth'
@@ -416,4 +562,22 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+});
+
+// Add typing animation to the role text
+document.addEventListener('DOMContentLoaded', function() {
+  const roleElement = document.getElementById('word');
+  if (roleElement) {
+    const roles = ['A passionate', 'A creative', 'An innovative', 'A dedicated'];
+    let currentRoleIndex = 0;
+    
+    setInterval(() => {
+      roleElement.style.opacity = '0';
+      setTimeout(() => {
+        currentRoleIndex = (currentRoleIndex + 1) % roles.length;
+        roleElement.textContent = roles[currentRoleIndex];
+        roleElement.style.opacity = '1';
+      }, 500);
+    }, 3000);
+  }
 });
