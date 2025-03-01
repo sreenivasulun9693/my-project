@@ -334,7 +334,8 @@ document.addEventListener('DOMContentLoaded', function() {
       challenges: "Ensuring vote integrity and preventing duplicate voting while maintaining voter anonymity.",
       solution: "Implemented a token-based voting system with cryptographic verification to ensure each voter can only vote once while keeping individual votes private.",
       image: "images/store1.jpg",
-      github: "https://github.com/sreenivasulun9693/my-works/tree/main/E-Commerce"
+      github: "https://github.com/sreenivasulun9693/my-works/tree/main/E-Commerce",
+      liveWebsite:"https://sreenivasulun9693.github.io/e-commerce/"
     }
   };
   
@@ -369,6 +370,12 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="project-links">
             <a href="${project.github}" target="_blank" class="project-link">
               <i class="fab fa-github"></i> View on GitHub
+            </a>
+          </div>
+
+          <div class="project-links">
+            <a href="${project.liveWebsite}" target="_blank" class="project-link">
+              <i class="fab fa-github"></i> Go to Website
             </a>
           </div>
         `;
