@@ -318,6 +318,23 @@ document.addEventListener('DOMContentLoaded', function() {
       solution: "Implemented a token-based voting system with cryptographic verification to ensure each voter can only vote once while keeping individual votes private.",
       image: "images/java 19.png",
       github: "https://github.com/sreenivasulun9693/my-works/tree/main/VotingSystem"
+
+    },
+    ew: {
+      title: "E-commerce Website",
+      description: "A Web based application using fundementals of web development like HTML and CSS.",
+      features: [
+        "Voter registration and verification",
+        "Candidate management",
+        "Secure voting process",
+        "Real-time vote counting",
+        "Result analysis and reporting"
+      ],
+      techStack: ["HTML", "CSS"],
+      challenges: "Ensuring vote integrity and preventing duplicate voting while maintaining voter anonymity.",
+      solution: "Implemented a token-based voting system with cryptographic verification to ensure each voter can only vote once while keeping individual votes private.",
+      image: "images/store1.jpg",
+      github: "https://github.com/sreenivasulun9693/my-works/tree/main/E-Commerce"
     }
   };
   
