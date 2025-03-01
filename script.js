@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
       challenges: "Implementing a robust database schema that could handle complex relationships between students, courses, and grades while maintaining data integrity and performance.",
       solution: "Utilized normalized database design with appropriate foreign key constraints and indexes. Implemented transaction management to ensure data consistency across related operations.",
       image: "https://images.unsplash.com/photo-1517842645767-c639042777db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      github: "https://github.com/yourusername/student-management"
+      github: "https://github.com/sreenivasulun9693/my-works/tree/main/StudentManagementSystem"
     },
     atm: {
       title: "ATM Interface",
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
       challenges: "Ensuring secure user authentication and maintaining transaction integrity while providing a user-friendly interface.",
       solution: "Implemented a layered architecture with separate components for authentication, transaction processing, and user interface to maintain code organization and security.",
       image: "images/java20.jpg",
-      github: "https://github.com/sreenivasulu2429/NewCoding/tree/main/AtmInterface"
+      github: "https://github.com/sreenivasulun9693/my-works/tree/main/AtmProject"
     },
     numguess: {
       title: "Number Guessing Game",
@@ -301,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
       challenges: "Creating an engaging user experience with appropriate difficulty scaling and meaningful feedback.",
       solution: "Designed an adaptive difficulty system that adjusts based on player performance and provides helpful hints without making the game too easy.",
       image: "images/java17-fotor-20240905213635.jpg",
-      github: "https://github.com/sreenivasulu2429/NewCoding/tree/main/Number_guessing"
+      github: "https://github.com/sreenivasulun9693/my-works/tree/main/NumberGuessingProject"
     },
     voting: {
       title: "Voting System",
@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
       challenges: "Ensuring vote integrity and preventing duplicate voting while maintaining voter anonymity.",
       solution: "Implemented a token-based voting system with cryptographic verification to ensure each voter can only vote once while keeping individual votes private.",
       image: "images/java 19.png",
-      github: "https://github.com/sreenivasulu2429/NewCoding/tree/main/Voting"
+      github: "https://github.com/sreenivasulun9693/my-works/tree/main/VotingSystem"
     }
   };
   
